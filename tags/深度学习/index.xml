@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>深度学习 on LeaveIt</title>
+    <link>https://MrChengsiyi.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in 深度学习 on LeaveIt</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 31 Oct 2020 14:12:35 +0800</lastBuildDate>
+    
+	<atom:link href="https://MrChengsiyi.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>UNET-基于CT的甲状腺结节分类（1）</title>
+      <link>https://MrChengsiyi.github.io/2020/blog/</link>
+      <pubDate>Sat, 31 Oct 2020 14:12:35 +0800</pubDate>
+      
+      <guid>https://MrChengsiyi.github.io/2020/blog/</guid>
+      <description>UNET-基于CT的甲状腺结节分类(1) 基于导师的新开项目，近日我开始接触医学图像分割，因为研一之前的项目是基于鼾声的频谱图特征的分类，所以对我来说是一个全新的领域，记录一下学习的过程。
+数据集制作 相对于一些竞赛所给的制作好的数据集，项目所用的项目是与医院合作获取的甲状腺CT图片，所得到的是医生导出的jpg格式的2d图片，无法从3d部分获取信息。
+数据集的mask需要自己进行标注，这里我使用的是标记工具是labelme,手动挑选出结节部分并标记好后，labelme会生成对应的json文件，里面存储的就是标记部分的位置信息。基于labelme自带的json_to_dataset.py，修改成自己想要的批量生成mask程序。生成的图片中良性结节的像素值为1，恶性为2，其余皆为背景，像素值为0.
+#labelme2dataset.py def shape_to_mask(img_shape, points): mask = np.zeros(img_shape[:2], dtype=np.uint8) mask = PIL.Image.fromarray(mask) draw = PIL.ImageDraw.Draw(mask) xy = [tuple(point) for point in points] assert len(xy) &amp;gt; 2, &amp;#39;Polygon must have points more than 2&amp;#39; draw.polygon(xy=xy, outline=1, fill=1) mask = np.array(mask, dtype=bool) return mask def shapes_to_label(img_shape, shapes, label_name_to_value): cls = np.zeros(img_shape[:2], dtype=np.uint8) ins = np.zeros_like(cls) instances = [] for shape in shapes: points = shape[&amp;#34;points&amp;#34;] label = shape[&amp;#34;label&amp;#34;] group_id = shape.</description>
+    </item>
+    
+  </channel>
+</rss>

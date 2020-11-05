@@ -1,0 +1,30 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LeaveIt on LeaveIt</title>
+    <link>https://MrChengsiyi.github.io/</link>
+    <description>Recent content in LeaveIt on LeaveIt</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 31 Oct 2020 14:12:35 +0800</lastBuildDate>
+    <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Posts</title>
+      <link>https://MrChengsiyi.github.io/posts/</link>
+      <pubDate>Sat, 31 Oct 2020 14:12:35 +0800</pubDate>
+      
+      <guid>https://MrChengsiyi.github.io/posts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Posts</title>
+      <link>https://MrChengsiyi.github.io/post/</link>
+      <pubDate>Thu, 10 Sep 2020 16:25:00 +0800</pubDate>
+      
+      <guid>https://MrChengsiyi.github.io/post/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

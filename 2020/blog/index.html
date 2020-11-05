@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="HERO">
+  
+  
+  
+  <link rel="prev" href="https://MrChengsiyi.github.io/2020/hugo%E7%9A%84blog%E6%93%8D%E4%BD%9C/" />
+  
+  <link rel="canonical" href="https://MrChengsiyi.github.io/2020/blog/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           UNET-基于CT的甲状腺结节分类（1） | LeaveIt
+       
+  </title>
+  <meta name="title" content="UNET-基于CT的甲状腺结节分类（1） | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/MrChengsiyi.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "UNET-基于CT的甲状腺结节分类（1）",
+    "headline" : "UNET-基于CT的甲状腺结节分类（1）",
+    "description" : "UNET-基于CT的甲状腺结节分类(1) 基于导师的新开项目，近日我开始接触医学图像分割，因为研一之前的项目是基于鼾声的频谱图特征的分类，所以对我来说是一个全新的领域，记录一下学习的过程。\n数据集制作 相对于一些竞赛所给的制作好的数据集，项目所用的项目是与医院合作获取的甲状腺CT图片，所得到的是医生导出的jpg格式的2d图片，无法从3d部分获取信息。\n数据集的mask需要自己进行标注，这里我使用的是标记工具是labelme,手动挑选出结节部分并标记好后，labelme会生成对应的json文件，里面存储的就是标记部分的位置信息。基于labelme自带的json_to_dataset.py，修改成自己想要的批量生成mask程序。生成的图片中良性结节的像素值为1，恶性为2，其余皆为背景，像素值为0.\n#labelme2dataset.py def shape_to_mask(img_shape, points): mask = np.zeros(img_shape[:2], dtype=np.uint8) mask = PIL.Image.fromarray(mask) draw = PIL.ImageDraw.Draw(mask) xy = [tuple(point) for point in points] assert len(xy) \x26gt; 2, \x26#39;Polygon must have points more than 2\x26#39; draw.polygon(xy=xy, outline=1, fill=1) mask = np.array(mask, dtype=bool) return mask def shapes_to_label(img_shape, shapes, label_name_to_value): cls = np.zeros(img_shape[:2], dtype=np.uint8) ins = np.zeros_like(cls) instances = [] for shape in shapes: points = shape[\x26#34;points\x26#34;] label = shape[\x26#34;label\x26#34;] group_id = shape.",
+    "inLanguage" : "en-us",
+    "author" : "HERO",
+    "creator" : "HERO",
+    "publisher": "HERO",
+    "accountablePerson" : "HERO",
+    "copyrightHolder" : "HERO",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-10-31 14:12:35 \x2b0800 CST",
+    "dateModified" : "2020-10-31 14:12:35 \x2b0800 CST",
+    "url" : "https:\/\/MrChengsiyi.github.io\/2020\/blog\/",
+    "wordCount" : "260",
+    "keywords" : [ "深度学习","图像分割", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://MrChengsiyi.github.io/">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://MrChengsiyi.github.io/">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">UNET-基于CT的甲状腺结节分类（1）</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://MrChengsiyi.github.io/" rel="author">HERO</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-10-31 itemprop="datePublished">October 31, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://MrChengsiyi.github.io/categories/python/"> python </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="unet-基于ct的甲状腺结节分类1">UNET-基于CT的甲状腺结节分类(1)</h1>
+<p>基于导师的新开项目，近日我开始接触医学图像分割，因为研一之前的项目是基于鼾声的频谱图特征的分类，所以对我来说是一个全新的领域，记录一下学习的过程。</p>
+<h1 id="数据集制作">数据集制作</h1>
+<p>相对于一些竞赛所给的制作好的数据集，项目所用的项目是与医院合作获取的甲状腺CT图片，所得到的是医生导出的jpg格式的2d图片，无法从3d部分获取信息。</p>
+<p><img src="D:%5Ccode%5Cmyblog%5Cstatic%5Cimg%5CUNET-%E5%9F%BA%E4%BA%8ECT%E7%9A%84%E7%94%B2%E7%8A%B6%E8%85%BA%E7%BB%93%E8%8A%82%E5%88%86%E7%B1%BB(1)%5CSnipaste_2020-10-31_14-28-40.jpg" alt="avatar"></p>
+<p>数据集的mask需要自己进行标注，这里我使用的是标记工具是labelme,手动挑选出结节部分并标记好后，labelme会生成对应的json文件，里面存储的就是标记部分的位置信息。基于labelme自带的<em>json</em>_to_dataset.py，修改成自己想要的批量生成mask程序。生成的图片中良性结节的像素值为1，恶性为2，其余皆为背景，像素值为0.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#labelme2dataset.py</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">shape_to_mask</span>(img_shape, points):
+    mask <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(img_shape[:<span style="color:#ae81ff">2</span>], dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>uint8)
+    mask <span style="color:#f92672">=</span> PIL<span style="color:#f92672">.</span>Image<span style="color:#f92672">.</span>fromarray(mask)
+    draw <span style="color:#f92672">=</span> PIL<span style="color:#f92672">.</span>ImageDraw<span style="color:#f92672">.</span>Draw(mask)
+    xy <span style="color:#f92672">=</span> [tuple(point) <span style="color:#66d9ef">for</span> point <span style="color:#f92672">in</span> points]
+    <span style="color:#66d9ef">assert</span> len(xy) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Polygon must have points more than 2</span><span style="color:#e6db74">&#39;</span>
+    draw<span style="color:#f92672">.</span>polygon(xy<span style="color:#f92672">=</span>xy, outline<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, fill<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    mask <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(mask, dtype<span style="color:#f92672">=</span>bool)
+    <span style="color:#66d9ef">return</span> mask
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">shapes_to_label</span>(img_shape, shapes, label_name_to_value):
+    cls <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(img_shape[:<span style="color:#ae81ff">2</span>], dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>uint8)
+    ins <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros_like(cls)
+    instances <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> shape <span style="color:#f92672">in</span> shapes:
+        points <span style="color:#f92672">=</span> shape[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">points</span><span style="color:#e6db74">&#34;</span>]
+        label <span style="color:#f92672">=</span> shape[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">label</span><span style="color:#e6db74">&#34;</span>]
+        group_id <span style="color:#f92672">=</span> shape<span style="color:#f92672">.</span>get(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">group_id</span><span style="color:#e6db74">&#34;</span>)
+        <span style="color:#66d9ef">if</span> group_id <span style="color:#f92672">is</span> None:
+            group_id <span style="color:#f92672">=</span> uuid<span style="color:#f92672">.</span>uuid1()
+        cls_name <span style="color:#f92672">=</span> label
+        instance <span style="color:#f92672">=</span> (cls_name, group_id)
+
+        <span style="color:#66d9ef">if</span> instance <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> instances:
+            instances<span style="color:#f92672">.</span>append(instance)
+        ins_id <span style="color:#f92672">=</span> instances<span style="color:#f92672">.</span>index(instance) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+        cls_id <span style="color:#f92672">=</span> label_name_to_value[cls_name]
+
+        mask <span style="color:#f92672">=</span> shape_to_mask(img_shape[:<span style="color:#ae81ff">2</span>], points)
+        cls[mask] <span style="color:#f92672">=</span> cls_id
+        ins[mask] <span style="color:#f92672">=</span> ins_id
+
+    <span style="color:#66d9ef">return</span> cls, ins
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+    parser <span style="color:#f92672">=</span> argparse<span style="color:#f92672">.</span>ArgumentParser()
+    parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--input_dir</span><span style="color:#e6db74">&#39;</span>, default<span style="color:#f92672">=</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">C:</span><span style="color:#e6db74">\</span><span style="color:#e6db74">Users</span><span style="color:#e6db74">\</span><span style="color:#e6db74">HERO</span><span style="color:#e6db74">\</span><span style="color:#e6db74">Desktop</span><span style="color:#e6db74">\</span><span style="color:#e6db74">新建文件夹</span><span style="color:#e6db74">&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">input annotated directory</span><span style="color:#e6db74">&#34;</span>)
+    parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--output_dir</span><span style="color:#e6db74">&#39;</span>, default<span style="color:#f92672">=</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">C:</span><span style="color:#e6db74">\</span><span style="color:#e6db74">Users</span><span style="color:#e6db74">\</span><span style="color:#e6db74">HERO</span><span style="color:#e6db74">\</span><span style="color:#e6db74">Desktop</span><span style="color:#e6db74">\</span><span style="color:#e6db74">新建文件夹</span><span style="color:#e6db74">\</span><span style="color:#e6db74">label</span><span style="color:#e6db74">&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">output dataset directory</span><span style="color:#e6db74">&#34;</span>)
+    args <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
+
+    <span style="color:#75715e"># if osp.exists(args.output_dir):</span>
+    <span style="color:#75715e">#     print(&#34;Output directory already exists:&#34;, args.output_dir)</span>
+    <span style="color:#75715e">#     sys.exit(1)</span>
+    <span style="color:#75715e"># os.makedirs(args.output_dir)</span>
+    annotations_path <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">label</span><span style="color:#e6db74">&#39;</span>
+    os<span style="color:#f92672">.</span>makedirs(osp<span style="color:#f92672">.</span>join(args<span style="color:#f92672">.</span>output_dir, annotations_path))
+
+    <span style="color:#75715e">#各类像素值表，如果需要可视化，可以修改</span>
+    class_name_to_id <span style="color:#f92672">=</span> {
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">_background_</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">0</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">a</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">1</span>,
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">2</span>,
+    }
+
+    <span style="color:#66d9ef">for</span> files <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>listdir(args<span style="color:#f92672">.</span>input_dir):
+        dir_path<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(args<span style="color:#f92672">.</span>input_dir, files)
+        <span style="color:#66d9ef">for</span> filename <span style="color:#f92672">in</span> glob<span style="color:#f92672">.</span>glob(osp<span style="color:#f92672">.</span>join(dir_path, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">*.json</span><span style="color:#e6db74">&#34;</span>)):
+            label_file_data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>load(open(filename,encoding<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">utf-8</span><span style="color:#e6db74">&#34;</span>))
+            base <span style="color:#f92672">=</span> osp<span style="color:#f92672">.</span>splitext(osp<span style="color:#f92672">.</span>basename(filename))[<span style="color:#ae81ff">0</span>]
+            out_insp_file <span style="color:#f92672">=</span> osp<span style="color:#f92672">.</span>join(
+                args<span style="color:#f92672">.</span>output_dir, annotations_path, base <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">.png</span><span style="color:#e6db74">&#34;</span>
+            )
+            img_shape <span style="color:#f92672">=</span> (label_file_data[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">imageHeight</span><span style="color:#e6db74">&#39;</span>], label_file_data[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">imageWidth</span><span style="color:#e6db74">&#39;</span>])
+            cls, ins <span style="color:#f92672">=</span> shapes_to_label(
+                img_shape<span style="color:#f92672">=</span>img_shape,
+                shapes<span style="color:#f92672">=</span>label_file_data[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">shapes</span><span style="color:#e6db74">&#39;</span>],
+                label_name_to_value<span style="color:#f92672">=</span>class_name_to_id,
+            )
+            im <span style="color:#f92672">=</span> PIL<span style="color:#f92672">.</span>Image<span style="color:#f92672">.</span>fromarray(cls)
+            im<span style="color:#f92672">.</span>save(out_insp_file)
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Output file : {}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(out_insp_file))
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">__main__</span><span style="color:#e6db74">&#34;</span>:
+    main()
+
+</code></pre></div><h1 id="网络模型">网络模型</h1>
+<p>在医学图像分割方面的模型选择中，我选择了最为出名的UNet。</p>
+<p>UNet网络是一种可以实现端到端映射的网络，非常适用于实现图像分割、恢复、增强和超分辨等目标。其具体网络结构如下图所示。</p>
+<p><img src="D:%5Ccode%5Cmyblog%5Cstatic%5Cimg%5CUNET-%E5%9F%BA%E4%BA%8ECT%E7%9A%84%E7%94%B2%E7%8A%B6%E8%85%BA%E7%BB%93%E8%8A%82%E5%88%86%E7%B1%BB(1)%5Cunet.jpg" alt="avatar"></p>
+<p>UNet网络有几个主要的特点：
+① 网络可以从中间分为左右两部分，左边是收缩路径，利用降采样和卷积模块提取不同尺度的特征；右边是扩展路径，利用上采样和卷积模块恢复尺度并融合先前特征，逐渐恢复图像；
+② 卷积模块由两层连续的卷积层组成，它可以实现更大尺寸和更高深度的特征提取；降采样实现图像尺度的缩小；上采样(或反卷积层)实现图像尺度的变大；
+③ 图中灰色的箭头线表示跳连，作用是在同一尺度下，将收缩路径上的特征合并到扩展路径上的特征，这样可以在扩展路径上提供更好的约束，网络也更容易输出我们期望的结果。</p>
+<p>我在代码中调用的是https://github.com/qubvel/segmentation_models中的封装好的UNET模型,调用模型部分代码如下。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">keras<span style="color:#f92672">.</span>backend<span style="color:#f92672">.</span>set_image_data_format(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">channels_last</span><span style="color:#e6db74">&#39;</span>)
+
+BACKBONE <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">vgg16</span><span style="color:#e6db74">&#39;</span>
+preprocess_input <span style="color:#f92672">=</span> sm<span style="color:#f92672">.</span>get_preprocessing(BACKBONE)
+model <span style="color:#f92672">=</span> sm<span style="color:#f92672">.</span>Unet(BACKBONE,input_shape<span style="color:#f92672">=</span>(None, None, <span style="color:#ae81ff">1</span>),classes<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">softmax</span><span style="color:#e6db74">&#39;</span>,encoder_weights<span style="color:#f92672">=</span>None)
+
+model<span style="color:#f92672">.</span>compile(
+        <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Adam</span><span style="color:#e6db74">&#39;</span>,
+        loss<span style="color:#f92672">=</span>sm<span style="color:#f92672">.</span>losses<span style="color:#f92672">.</span>cce_dice_loss,
+        metrics<span style="color:#f92672">=</span>[sm<span style="color:#f92672">.</span>metrics<span style="color:#f92672">.</span>iou_score],
+    )
+
+    callbacks <span style="color:#f92672">=</span> [
+                 ReduceLROnPlateau(factor<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, patience<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span>, min_lr<span style="color:#f92672">=</span><span style="color:#ae81ff">0.00005</span>, verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>),
+                 ModelCheckpoint(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">./weights/my_model.h5</span><span style="color:#e6db74">&#39;</span>, verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, save_best_only<span style="color:#f92672">=</span>True)]
+
+    model<span style="color:#f92672">.</span>fit(
+       x<span style="color:#f92672">=</span>x_train,
+       y<span style="color:#f92672">=</span>x_label,
+       batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">32</span>,
+       epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>,
+       validation_data<span style="color:#f92672">=</span>(y_train, y_label),
+       callbacks<span style="color:#f92672">=</span>callbacks,
+    )
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>HERO </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://MrChengsiyi.github.io/2020/blog/>https://MrChengsiyi.github.io/2020/blog/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://MrChengsiyi.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                    #深度学习</a></span>
+            
+            <span class="tag"><a href="https://MrChengsiyi.github.io/tags/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2/">
+                    #图像分割</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://MrChengsiyi.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://MrChengsiyi.github.io/2020/hugo%E7%9A%84blog%E6%93%8D%E4%BD%9C/" class="prev" rel="prev" title="我的Hugo的实操"><i class="iconfont icon-left"></i>&nbsp;我的Hugo的实操</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://MrChengsiyi.github.io/">HERO</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on LeaveIt</title>
+    <link>https://MrChengsiyi.github.io/posts/</link>
+    <description>Recent content in Posts on LeaveIt</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 31 Oct 2020 14:12:35 +0800</lastBuildDate>
+    
+	<atom:link href="https://MrChengsiyi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>UNET-基于CT的甲状腺结节分类（1）</title>
+      <link>https://MrChengsiyi.github.io/2020/blog/</link>
+      <pubDate>Sat, 31 Oct 2020 14:12:35 +0800</pubDate>
+      
+      <guid>https://MrChengsiyi.github.io/2020/blog/</guid>
+      <description>UNET-基于CT的甲状腺结节分类(1) 基于导师的新开项目，近日我开始接触医学图像分割，因为研一之前的项目是基于鼾声的频谱图特征的分类，所以对我来说是一个全新的领域，记录一下学习的过程。
+数据集制作 相对于一些竞赛所给的制作好的数据集，项目所用的项目是与医院合作获取的甲状腺CT图片，所得到的是医生导出的jpg格式的2d图片，无法从3d部分获取信息。
+数据集的mask需要自己进行标注，这里我使用的是标记工具是labelme,手动挑选出结节部分并标记好后，labelme会生成对应的json文件，里面存储的就是标记部分的位置信息。基于labelme自带的json_to_dataset.py，修改成自己想要的批量生成mask程序。生成的图片中良性结节的像素值为1，恶性为2，其余皆为背景，像素值为0.
+#labelme2dataset.py def shape_to_mask(img_shape, points): mask = np.zeros(img_shape[:2], dtype=np.uint8) mask = PIL.Image.fromarray(mask) draw = PIL.ImageDraw.Draw(mask) xy = [tuple(point) for point in points] assert len(xy) &amp;gt; 2, &amp;#39;Polygon must have points more than 2&amp;#39; draw.polygon(xy=xy, outline=1, fill=1) mask = np.array(mask, dtype=bool) return mask def shapes_to_label(img_shape, shapes, label_name_to_value): cls = np.zeros(img_shape[:2], dtype=np.uint8) ins = np.zeros_like(cls) instances = [] for shape in shapes: points = shape[&amp;#34;points&amp;#34;] label = shape[&amp;#34;label&amp;#34;] group_id = shape.</description>
+    </item>
+    
+    <item>
+      <title>我的Hugo的实操</title>
+      <link>https://MrChengsiyi.github.io/2020/hugo%E7%9A%84blog%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Fri, 11 Sep 2020 12:14:46 +0800</pubDate>
+      
+      <guid>https://MrChengsiyi.github.io/2020/hugo%E7%9A%84blog%E6%93%8D%E4%BD%9C/</guid>
+      <description>Hugo安装 windows平台安装hugo github官方下载
+将下载好的压缩包解压后，将文件夹路径添加到环境变量的path中
+注意：PATH中路径只需要添加到hugo.exe所在的文件夹即可，不需要包含hugo.exe，如全路径为d:\a\hugo.exe，则添加路径为d:\a
+之后输入打开cmd，输入hugo version后出现如下情况则hugo安装成功
+本地创建blog 创建项目 首先可以先建立一个文件夹，用于安放blog代码。之后在此文件夹下运行cmd，输入hugo new site myblog（myblog为自己取的项目名称）
+下载使用主题 Hugo有许多开源主题，我这边使用的是leaveit，安装的话直接 cd 到 hugo 的 themes 目录然后下载即可：
+git clone https://github.com/liuzc/LeaveIt.git 然后修改 config.toml 中的 theme字段为LeaveIt:
+theme = &amp;quot;LeaveIt&amp;quot; 主题配置 可以参考exampleSite中的config.toml。
+打开本地blog 在myblog目录下输入hugo server --buildDrafts
+运行//localhost:1313/就可以在本地看到自己的博客了
+写文章 切换到myblog目录下，cmd命令行中键入hugo new posts/blog.md（有些主题是post，如果posts不行建议改成post试试）
+这个操作会在myblog\content\posts路径下生成一个blog.md文件
+使用makedown文本编辑器就能编辑该blog。这里使用typora编辑第一篇文章.(注意 要将draft属性改成false 否则在部署好后的Blog内会找不到该文章)
+保存好后就可以看见网页中的Blog页面中多了一篇First文章，内容如下。
+部署到github 在github创建一个远端仓库 注意：这里仓库的名字必须是github账户名+.github.io （踩坑了好几次，之前随意取了好几次名，每次部署好界面都显示404！！！）
+生成public文件夹 在myblog目录下，cmd命令行中键入命令hugo --baseUrl=&amp;quot;https://XXX.github.io/&amp;quot; --buildDrafts(xxx是自己的github账户名)
+目录下就会多出一个public文件夹，之后我们将文件夹上传到github上就行了
+上传github cd public git init git add . git commit -m &amp;quot;first commit&amp;quot; git remote add origin https://github.</description>
+    </item>
+    
+    <item>
+      <title>First</title>
+      <link>https://MrChengsiyi.github.io/2020/first/</link>
+      <pubDate>Thu, 10 Sep 2020 16:30:39 +0800</pubDate>
+      
+      <guid>https://MrChengsiyi.github.io/2020/first/</guid>
+      <description>csy博客第一次测试</description>
+    </item>
+    
+  </channel>
+</rss>

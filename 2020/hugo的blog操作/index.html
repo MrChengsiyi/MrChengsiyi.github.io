@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="HERO">
+  
+  
+  
+  <link rel="prev" href="https://MrChengsiyi.github.io/2020/first/" />
+  <link rel="next" href="https://MrChengsiyi.github.io/2020/blog/" />
+  <link rel="canonical" href="https://MrChengsiyi.github.io/2020/hugo%E7%9A%84blog%E6%93%8D%E4%BD%9C/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           我的Hugo的实操 | LeaveIt
+       
+  </title>
+  <meta name="title" content="我的Hugo的实操 | LeaveIt">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/MrChengsiyi.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "我的Hugo的实操",
+    "headline" : "我的Hugo的实操",
+    "description" : "Hugo安装 windows平台安装hugo github官方下载\n将下载好的压缩包解压后，将文件夹路径添加到环境变量的path中\n注意：PATH中路径只需要添加到hugo.exe所在的文件夹即可，不需要包含hugo.exe，如全路径为d:\\a\\hugo.exe，则添加路径为d:\\a\n之后输入打开cmd，输入hugo version后出现如下情况则hugo安装成功\n本地创建blog 创建项目 首先可以先建立一个文件夹，用于安放blog代码。之后在此文件夹下运行cmd，输入hugo new site myblog（myblog为自己取的项目名称）\n下载使用主题 Hugo有许多开源主题，我这边使用的是leaveit，安装的话直接 cd 到 hugo 的 themes 目录然后下载即可：\ngit clone https:\/\/github.com\/liuzc\/LeaveIt.git 然后修改 config.toml 中的 theme字段为LeaveIt:\ntheme = \x26quot;LeaveIt\x26quot; 主题配置 可以参考exampleSite中的config.toml。\n打开本地blog 在myblog目录下输入hugo server --buildDrafts\n运行\/\/localhost:1313\/就可以在本地看到自己的博客了\n写文章 切换到myblog目录下，cmd命令行中键入hugo new posts\/blog.md（有些主题是post，如果posts不行建议改成post试试）\n这个操作会在myblog\\content\\posts路径下生成一个blog.md文件\n使用makedown文本编辑器就能编辑该blog。这里使用typora编辑第一篇文章.(注意 要将draft属性改成false 否则在部署好后的Blog内会找不到该文章)\n保存好后就可以看见网页中的Blog页面中多了一篇First文章，内容如下。\n部署到github 在github创建一个远端仓库 注意：这里仓库的名字必须是github账户名\x2b.github.io （踩坑了好几次，之前随意取了好几次名，每次部署好界面都显示404！！！）\n生成public文件夹 在myblog目录下，cmd命令行中键入命令hugo --baseUrl=\x26quot;https:\/\/XXX.github.io\/\x26quot; --buildDrafts(xxx是自己的github账户名)\n目录下就会多出一个public文件夹，之后我们将文件夹上传到github上就行了\n上传github cd public git init git add . git commit -m \x26quot;first commit\x26quot; git remote add origin https:\/\/github.",
+    "inLanguage" : "en-us",
+    "author" : "HERO",
+    "creator" : "HERO",
+    "publisher": "HERO",
+    "accountablePerson" : "HERO",
+    "copyrightHolder" : "HERO",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-09-11 12:14:46 \x2b0800 CST",
+    "dateModified" : "2020-09-11 12:14:46 \x2b0800 CST",
+    "url" : "https:\/\/MrChengsiyi.github.io\/2020\/hugo%E7%9A%84blog%E6%93%8D%E4%BD%9C\/",
+    "wordCount" : "79",
+    "keywords" : [ "hugo", "LeaveIt"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://MrChengsiyi.github.io/">LeaveIt</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://MrChengsiyi.github.io/">LeaveIt</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">我的Hugo的实操</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://MrChengsiyi.github.io/" rel="author">HERO</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-09-11 itemprop="datePublished">September 11, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://MrChengsiyi.github.io/categories/hugo/"> hugo </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h1 id="hugo安装">Hugo安装</h1>
+<p>windows平台安装hugo    <a href="https://github.com/gohugoio/hugo/releases">github官方下载</a></p>
+<p><img src="/img/1.jpg" alt="avatar"></p>
+<p>将下载好的压缩包解压后，将文件夹路径添加到环境变量的path中</p>
+<p><strong>注意：PATH中路径只需要添加到hugo.exe所在的文件夹即可，不需要包含hugo.exe，如全路径为<code>d:\a\hugo.exe</code>，则添加路径为<code>d:\a</code></strong></p>
+<p>之后输入打开cmd，输入hugo version后出现如下情况则hugo安装成功</p>
+<p><img src="/img/2.png" alt="image-20200911125143171"></p>
+<h1 id="本地创建blog">本地创建blog</h1>
+<h2 id="创建项目">创建项目</h2>
+<p>首先可以先建立一个文件夹，用于安放blog代码。之后在此文件夹下运行cmd，输入<code>hugo new site myblog</code>（myblog为自己取的项目名称）</p>
+<p><img src="/img/3.png" alt="image-20200911140545916"></p>
+<h2 id="下载使用主题">下载使用主题</h2>
+<p>Hugo有许多开源主题，我这边使用的是leaveit，安装的话直接 cd 到 hugo 的 themes 目录然后下载即可：</p>
+<pre><code>git clone https://github.com/liuzc/LeaveIt.git
+</code></pre><p>然后修改 config.toml 中的 theme字段为LeaveIt:</p>
+<pre><code>theme = &quot;LeaveIt&quot;
+</code></pre><h2 id="主题配置">主题配置</h2>
+<p>可以参考exampleSite中的config.toml。</p>
+<h2 id="打开本地blog">打开本地blog</h2>
+<p>在myblog目录下输入<code>hugo server  --buildDrafts</code></p>
+<p>运行//localhost:1313/就可以在本地看到自己的博客了</p>
+<p><img src="/img/4.png" alt="image-20200911133124196"></p>
+<h1 id="写文章">写文章</h1>
+<p>切换到myblog目录下，cmd命令行中键入<code>hugo new posts/blog.md</code>（有些主题是post，如果posts不行建议改成post试试）</p>
+<p>这个操作会在myblog\content\posts路径下生成一个blog.md文件</p>
+<p>使用makedown文本编辑器就能编辑该blog。这里使用typora编辑第一篇文章.(<strong>注意 要将draft属性改成false 否则在部署好后的Blog内会找不到该文章</strong>)</p>
+<p><img src="/img/5.png" alt="image-20200911135413491"></p>
+<p>保存好后就可以看见网页中的Blog页面中多了一篇First文章，内容如下。</p>
+<p><img src="/img/6.png" alt="image-20200911135458099"></p>
+<h1 id="部署到github">部署到github</h1>
+<h2 id="在github创建一个远端仓库">在github创建一个远端仓库</h2>
+<p><strong>注意：这里仓库的名字必须是github账户名+.github.io</strong> （踩坑了好几次，之前随意取了好几次名，每次部署好界面都显示404！！！）</p>
+<h2 id="生成public文件夹">生成public文件夹</h2>
+<p>在myblog目录下，cmd命令行中键入命令<code>hugo  --baseUrl=&quot;https://XXX.github.io/&quot; --buildDrafts</code>(xxx是自己的github账户名)</p>
+<p>目录下就会多出一个public文件夹，之后我们将文件夹上传到github上就行了</p>
+<p><img src="/img/7.png" alt="image-20200911140614785"></p>
+<h2 id="上传github">上传github</h2>
+<pre><code>cd public
+git init
+git add .
+git commit -m &quot;first commit&quot;
+git remote add origin https://github.com/xxx/xxx.github.io.git
+git push -u origin master
+</code></pre>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>HERO </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://MrChengsiyi.github.io/2020/hugo%E7%9A%84blog%E6%93%8D%E4%BD%9C/>https://MrChengsiyi.github.io/2020/hugo%E7%9A%84blog%E6%93%8D%E4%BD%9C/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://MrChengsiyi.github.io/tags/hugo/">
+                    #hugo</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://MrChengsiyi.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://MrChengsiyi.github.io/2020/first/" class="prev" rel="prev" title="First"><i class="iconfont icon-left"></i>&nbsp;First</a>
+         
+        
+        <a href="https://MrChengsiyi.github.io/2020/blog/" class="next" rel="next" title="UNET-基于CT的甲状腺结节分类（1）">UNET-基于CT的甲状腺结节分类（1）&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://MrChengsiyi.github.io/">HERO</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

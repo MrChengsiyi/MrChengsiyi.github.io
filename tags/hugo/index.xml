@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo on LeaveIt</title>
+    <link>https://MrChengsiyi.github.io/tags/hugo/</link>
+    <description>Recent content in hugo on LeaveIt</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Sep 2020 12:14:46 +0800</lastBuildDate>
+    
+	<atom:link href="https://MrChengsiyi.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>我的Hugo的实操</title>
+      <link>https://MrChengsiyi.github.io/2020/hugo%E7%9A%84blog%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Fri, 11 Sep 2020 12:14:46 +0800</pubDate>
+      
+      <guid>https://MrChengsiyi.github.io/2020/hugo%E7%9A%84blog%E6%93%8D%E4%BD%9C/</guid>
+      <description>Hugo安装 windows平台安装hugo github官方下载
+将下载好的压缩包解压后，将文件夹路径添加到环境变量的path中
+注意：PATH中路径只需要添加到hugo.exe所在的文件夹即可，不需要包含hugo.exe，如全路径为d:\a\hugo.exe，则添加路径为d:\a
+之后输入打开cmd，输入hugo version后出现如下情况则hugo安装成功
+本地创建blog 创建项目 首先可以先建立一个文件夹，用于安放blog代码。之后在此文件夹下运行cmd，输入hugo new site myblog（myblog为自己取的项目名称）
+下载使用主题 Hugo有许多开源主题，我这边使用的是leaveit，安装的话直接 cd 到 hugo 的 themes 目录然后下载即可：
+git clone https://github.com/liuzc/LeaveIt.git 然后修改 config.toml 中的 theme字段为LeaveIt:
+theme = &amp;quot;LeaveIt&amp;quot; 主题配置 可以参考exampleSite中的config.toml。
+打开本地blog 在myblog目录下输入hugo server --buildDrafts
+运行//localhost:1313/就可以在本地看到自己的博客了
+写文章 切换到myblog目录下，cmd命令行中键入hugo new posts/blog.md（有些主题是post，如果posts不行建议改成post试试）
+这个操作会在myblog\content\posts路径下生成一个blog.md文件
+使用makedown文本编辑器就能编辑该blog。这里使用typora编辑第一篇文章.(注意 要将draft属性改成false 否则在部署好后的Blog内会找不到该文章)
+保存好后就可以看见网页中的Blog页面中多了一篇First文章，内容如下。
+部署到github 在github创建一个远端仓库 注意：这里仓库的名字必须是github账户名+.github.io （踩坑了好几次，之前随意取了好几次名，每次部署好界面都显示404！！！）
+生成public文件夹 在myblog目录下，cmd命令行中键入命令hugo --baseUrl=&amp;quot;https://XXX.github.io/&amp;quot; --buildDrafts(xxx是自己的github账户名)
+目录下就会多出一个public文件夹，之后我们将文件夹上传到github上就行了
+上传github cd public git init git add . git commit -m &amp;quot;first commit&amp;quot; git remote add origin https://github.</description>
+    </item>
+    
+    <item>
+      <title>First</title>
+      <link>https://MrChengsiyi.github.io/2020/first/</link>
+      <pubDate>Thu, 10 Sep 2020 16:30:39 +0800</pubDate>
+      
+      <guid>https://MrChengsiyi.github.io/2020/first/</guid>
+      <description>csy博客第一次测试</description>
+    </item>
+    
+  </channel>
+</rss>
